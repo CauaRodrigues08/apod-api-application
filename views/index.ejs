@@ -1,0 +1,36 @@
+<%- include("partials/header") %>
+
+<div class="container mt-4">
+  <h1 class="text-center mb-4">Busque imagens de astros (sem copyright)</h1>
+
+  <form action="/search" method="POST" class="mb-4">
+    <div class="input-group">
+      <input type="text" name="astro" class="form-control" placeholder="Digite o nome do astro (ex: Saturn)" required>
+      <button type="submit" class="btn btn-primary">Buscar</button>
+    </div>
+  </form>
+
+  <% if (images && images.length > 0) { %>
+    <div id="carouselAstros" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <% images.forEach((img, index) => { %>
+          <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+            <img src="<%= img.url %>" class="d-block w-100" alt="<%= img.title %>">
+            <div class="carousel-caption d-none d-md-block">
+              <h5><%= img.title %></h5>
+              <p><%= img.date %></p>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselAstros" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselAstros" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+      </button>
+    </div>
+  <% } else if (images) { %>
+    <p class="text-center text-muted">Nenhuma imagem encontrada para "<%= astro %>".</p>
+  <% } %>
+</div>
